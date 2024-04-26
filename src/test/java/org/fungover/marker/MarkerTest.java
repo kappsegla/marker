@@ -14,6 +14,12 @@ public class MarkerTest {
 
         assertThat(pos).isEqualTo(7);
     }
-    
-    
+
+    @Test
+    void sds() {
+        String input = "bvwbjplbgvbhsrlpgdmjqwftvncz";
+        int pos = Marker.messageMarker(input);
+        assertThat(pos).isEqualTo(5);
+    }
+
 }
