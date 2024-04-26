@@ -1,0 +1,22 @@
+#Build with: docker build --tag marker-native:1 -f .\Dockerfile-native .
+FROM container-registry.oracle.com/graalvm/native-image:22 as build
+# Install maven 3.9.6
+RUN curl https://archive.apache.org/dist/maven/maven-3/3.9.6/binaries/apache-maven-3.9.6-bin.tar.gz -o /tmp/maven.tar.gz \
+        && tar xf /tmp/maven.tar.gz -C /opt \
+        && ln -s /opt/apache-maven-3.9.6 /opt/maven \
+        && ln -s /opt/maven/bin/mvn /usr/bin/mvn \
+        && rm -f /tmp/maven.tar.gz
+
+WORKDIR /app
+COPY . /app
+RUN mvn package
+RUN native-image --module-path "target/marker-1.0-SNAPSHOT.jar" \
+    --module org.fungover.marker/org.fungover.marker.Marker \
+    --native-image-info \
+    --verbose \
+    /marker
+
+FROM alpine:latest
+RUN apk add gcompat
+COPY --from=build /marker /marker
+ENTRYPOINT ["/marker"]
