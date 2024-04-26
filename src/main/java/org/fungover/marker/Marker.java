@@ -2,13 +2,21 @@ package org.fungover.marker;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
 public class Marker {
     public static final int MARKER_SIZE = 4;
 
     public static void main(String[] args) {
-
+        Scanner sc = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter string to scan,(empty string to exit):");
+            String s = sc.nextLine();
+            if( s.isEmpty())
+                return;
+            System.out.println("Message starts at index " + messageMarker(s));
+        }
     }
 
     public static int messageMarker(String input) {
