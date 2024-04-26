@@ -7,6 +7,10 @@ import java.util.Set;
 public class Marker {
     public static final int MARKER_SIZE = 4;
 
+    public static void main(String[] args) {
+
+    }
+
     public static int messageMarker(String input) {
         char[] tokens = input.toCharArray();
         for (int i = 0; i < tokens.length - (MARKER_SIZE - 1); i++) {
